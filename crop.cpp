@@ -3,14 +3,7 @@
 Crop::Crop( QObject* parent )
     : QObject( parent )
     , m_crop( QRectF( 0.0, 0.0, 0.0, 0.0 ) )
-    , m_startDraw( true ) {
-
-    connect( this, &Crop::cropChanged, this, [&] {
-        //
-        //        qDebug() << "backend:" << m_crop;
-    } );
-}
-
+    , m_startDraw( true ) { }
 
 const QRectF& Crop::crop() const {
     return m_crop;

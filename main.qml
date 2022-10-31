@@ -37,10 +37,8 @@ ApplicationWindow {
                 property real aspect: sourceSize.width / sourceSize.height
                 property bool horizontal: windowAspect >= aspect
 
-//                anchors.centerIn: parent
                 anchors.fill: parent
                 mipmap: true
-//                source: "file:///home/andreagenor/Pictures/color.jpg"
 
                 width: horizontal ? parent.height * aspect : parent.width
                 height: horizontal ? parent.height : parent.width / aspect
