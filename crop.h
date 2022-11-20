@@ -1,70 +1,64 @@
 #pragma once
 
 #include <QObject>
-#include <QPointF>
 #include <QQmlEngine>
 #include <QRectF>
-#include <QSizeF>
 
 class Crop : public QObject {
+
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY( QPointF startPoint READ startPoint WRITE setStartPoint NOTIFY startPointChanged )
-    Q_PROPERTY( QPointF currentPoint READ currentPoint WRITE setCurrentPoint NOTIFY currentPointChanged )
-    Q_PROPERTY( QSizeF windowSize READ windowSize WRITE setWindowSize NOTIFY windowSizeChanged )
     Q_PROPERTY( QRectF crop READ crop WRITE setCrop NOTIFY cropChanged )
-
+    Q_PROPERTY( QSizeF boundaries READ boundaries WRITE setBoundaries NOTIFY boundariesChanged )
     Q_PROPERTY( bool startDraw READ startDraw WRITE setStartDraw NOTIFY startDrawChanged )
+    Q_PROPERTY( int stepSize READ stepSize WRITE setStepSize NOTIFY stepSizeChanged )
 
-    Q_PROPERTY( QPointF topLeft READ topLeft WRITE setTopLeft NOTIFY topLeftChanged )
-    Q_PROPERTY( QPointF bottomRight READ bottomRight WRITE setBottomRight NOTIFY bottomRightChanged )
 public:
     Crop( QObject* parent = nullptr );
 
-    Q_INVOKABLE const QRectF& crop() const;
-    Q_INVOKABLE void setCrop( const QRectF& newCrop );
-
-    QPointF startPoint() const;
-    void setStartPoint( QPointF newStartPoint );
-
-    Q_INVOKABLE void reset();
-    Q_INVOKABLE void makeRect( qreal mouseX, qreal mouseY );
-
-    const QSizeF& windowSize() const;
-    void setWindowSize( const QSizeF& newWindowSize );
-
-    QPointF currentPoint() const;
-    void setCurrentPoint( QPointF newCurrentPoint );
-
+    const QRectF& crop() const;
+    const QSizeF& boundaries() const;
     bool startDraw() const;
+    int stepSize() const;
+
+public Q_SLOTS:
+    void reset();
+
+    void setCrop( const QRectF& newCrop );
+    void setBoundaries( const QSizeF& newboundaries );
     void setStartDraw( bool newStartDraw );
+    void setStartPoint( QPointF newStartPoint );
+    void setStepSize( int newStepSize );
 
-    QPointF topLeft() const;
+    void makeRect( qreal mouseX, qreal mouseY );
+
+    void setX( qreal newX );
+    void setY( qreal newY );
     void setTopLeft( QPointF newTopLeft );
-
-    QPointF bottomRight() const;
+    void setTopRight( QPointF newTopRight );
+    void setBottomLeft( QPointF newBottomLeft );
     void setBottomRight( QPointF newBottomRight );
+    void setLeft( qreal newLeft );
+    void setRight( qreal newRight );
+    void setTop( qreal newTop );
+    void setBottom( qreal newBottom );
+
+    void increaseX();
+    void increaseY();
+    void decreaseX();
+    void decreaseY();
 
 Q_SIGNALS:
     void cropChanged();
-    void startPointChanged();
-    void windowSizeChanged();
-
-    void currentPointChanged();
-
+    void boundariesChanged();
     void startDrawChanged();
-
-    void topLeftChanged();
-
-    void bottomRightChanged();
+    void stepSizeChanged();
 
 private:
     QRectF m_crop;
+    QSizeF m_boundaries;
     QPointF m_startPoint;
-    QSizeF m_windowSize;
-    QPointF m_currentPoint;
     bool m_startDraw;
-    QPointF m_topLeft;
-    QPointF m_bottomRight;
+    int m_stepSize;
 };
