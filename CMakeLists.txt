@@ -14,7 +14,15 @@ qt_add_executable(appCropTool
 qt_add_qml_module(appCropTool
     URI CropTool
     VERSION 1.0
-    QML_FILES main.qml CropTool.qml CropDimensionLabel.qml
+    QML_FILES
+        main.qml
+        CropTool.qml
+        CropDimensionLabel.qml
+        RuleOfThird.qml
+        Diagonal.qml
+        GoldenRatio.qml
+        CropOverlay.qml
+        Misc.js
     SOURCES crop.h crop.cpp
     RESOURCES assets/chevron--mini.svg
 )

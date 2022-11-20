@@ -17,6 +17,10 @@ class Crop : public QObject {
 public:
     Crop( QObject* parent = nullptr );
 
+    enum class CompositionType { RuleOfThirds, Diagonal, GoldenRatio };
+
+    Q_ENUM( CompositionType )
+
     const QRectF& crop() const;
     const QSizeF& boundaries() const;
     bool startDraw() const;
@@ -62,3 +66,5 @@ private:
     bool m_startDraw;
     int m_stepSize;
 };
+
+Q_DECLARE_METATYPE( Crop::CompositionType )

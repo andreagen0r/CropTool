@@ -21,6 +21,8 @@ FocusScope {
 
   readonly property rect crop: backend.crop
 
+  property int compositeGuideType: backend.Diagonal
+
   Binding {
     target: backend
     property: "boundaries"
@@ -92,6 +94,11 @@ FocusScope {
     id: backend
   }
 
+  CropOverlay {
+    anchors.fill: parent
+    roi: backend
+  }
+
   Shape {
     id: background
 
@@ -107,7 +114,7 @@ FocusScope {
       strokeStyle: ShapePath.DashLine
       dashPattern: [1, 3]
       strokeColor: root.borderColor
-      fillColor: root.backgroundColor
+      fillColor: "transparent" //root.backgroundColor
       joinStyle: ShapePath.RoundJoin
       startX: 0
       startY: 0
@@ -158,6 +165,36 @@ FocusScope {
         backend.crop.y = background.y
       }
     }
+  }
+
+  RuleOfThird {
+    id: composite_ruleOfThirds
+    x: handleLeft.x
+    y: handleTop.y
+    width: handleRight.x - handleLeft.x
+    height: handleBottom.y - handleTop.y
+    visible: root.compositeGuideType === backend.RuleOfThirds
+    color: root.color
+  }
+
+  Diagonal {
+    id: composite_diagonal
+    x: handleLeft.x
+    y: handleTop.y
+    width: handleRight.x - handleLeft.x
+    height: handleBottom.y - handleTop.y
+    visible: root.compositeGuideType === backend.Diagonal
+    color: root.color
+  }
+
+  GoldenRatio {
+    id: composite_goldenRatioGrid
+    x: handleLeft.x
+    y: handleTop.y
+    width: handleRight.x - handleLeft.x
+    height: handleBottom.y - handleTop.y
+    visible: root.compositeGuideType === backend.GoldenRatio
+    color: root.color
   }
 
   Item {

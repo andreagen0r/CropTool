@@ -11,20 +11,48 @@ ApplicationWindow {
   height: 1080
   visible: true
 
+  Material.theme: Material.Dark
+  Material.accent: Material.Orange
+
   ColumnLayout {
     anchors.fill: parent
 
-    ToolButton {
-      text: "Crop"
-      checkable: true
-      onCheckedChanged: {
-        if (image1.selection) {
-          image1.selection.destroy()
+    RowLayout {
+      Layout.fillWidth: true
+
+      ToolButton {
+        text: "Crop"
+        checkable: true
+        onCheckedChanged: {
+          if (image1.selection) {
+            image1.selection.destroy()
+          }
+          image1.selection = cropComponent.createObject(image1, {
+                                                          "anchors.fill": image1,
+                                                          "focus": true
+                                                        })
         }
-        image1.selection = cropComponent.createObject(image1, {
-                                                        "anchors.fill": image1,
-                                                        "focus": true
-                                                      })
+      }
+      ComboBox {
+        id: combo
+        Layout.preferredWidth: 150
+        textRole: "text"
+        valueRole: "value"
+        model: ListModel {
+          id: model
+          ListElement {
+            text: "Rule of Third"
+            value: 0
+          }
+          ListElement {
+            text: "Diagonal"
+            value: 1
+          }
+          ListElement {
+            text: "Golden Ratio"
+            value: 2
+          }
+        }
       }
     }
 
@@ -45,13 +73,16 @@ ApplicationWindow {
 
         width: horizontal ? parent.height * aspect : parent.width
         height: horizontal ? parent.height : parent.width / aspect
-        source: "https://images.unsplash.com/photo-1668877874752-518c5315d38d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+        source: "https://images.unsplash.com/photo-1457301353672-324d6d14f471?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
       }
     }
   }
 
   Component {
     id: cropComponent
-    CropTool {}
+    CropTool {
+      focus: true
+      compositeGuideType: combo.currentValue
+    }
   }
 }
